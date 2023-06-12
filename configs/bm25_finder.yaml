@@ -1,0 +1,7 @@
+output_path: ???
+dataset_split: ???
+setup_type: ???
+task_name: ???
+L: 50
+score: False
+reindexing: True

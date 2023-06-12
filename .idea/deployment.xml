@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="klv@10.176.52.120:20000 (udr)" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="klv@10.176.52.120:20000 (udr)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/udr" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

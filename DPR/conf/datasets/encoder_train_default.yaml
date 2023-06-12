@@ -1,0 +1,522 @@
+# @package _group_
+epr_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: ???
+  setup_type: ???
+  top_k: ???
+  hard_neg: ???
+  task_name: ???
+  loss_type: ???
+  rank_loss_top_sample: ???
+
+agnews_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/agnews/agnews_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: agnews
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+amazon_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/amazon/amazon_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: amazon
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+break_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/break/break_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: break
+  loss_type: ???
+  rank_loss_top_sample: 2
+  rank_loss_factor: 16
+
+cnndailymail_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/cnndailymail/cnndailymail_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: cnndailymail
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+cola_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/cola/cola_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: cola
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+common_gen_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/common_gen/common_gen_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: common_gen
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+copa_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/copa/copa_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: copa
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+cosmos_qa_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/cosmos_qa/cosmos_qa_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: cosmos_qa
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+cr_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/cr/cr_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: cr
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+cs_explan_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/cs_explan/cs_explan_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: cs_explan
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+cs_valid_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/cs_valid/cs_valid_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: cs_valid
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+dart_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/dart/dart_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: dart
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+dbpedia_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/dbpedia/dbpedia_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: dbpedia
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+e2e_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/e2e/e2e_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: e2e
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 16
+
+go_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/go/go_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: go
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+java_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/java/java_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: java
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+javascript_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/javascript/javascript_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: javascript
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+mnli_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/mnli/mnli_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: mnli
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+mr_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/mr/mr_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: mr
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+mtop_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/mtop/mtop_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: mtop
+  loss_type: ???
+  rank_loss_top_sample: 2
+  rank_loss_factor: 16
+
+php_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/php/php_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: php
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+pubmed_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/pubmed/pubmed_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: pubmed
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+python_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/python/python_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: python
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+qnli_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/qnli/qnli_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: qnli
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+reddit_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/reddit/reddit_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: reddit
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+roc_ending_generation_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/roc_ending_generation/roc_ending_generation_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: roc_ending_generation
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+roc_story_generation_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/roc_story_generation/roc_story_generation_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: roc_story_generation
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+rte_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/rte/rte_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: rte
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+ruby_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/ruby/ruby_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: ruby
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+smcalflow_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/smcalflow/smcalflow_dedup_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: smcalflow
+  loss_type: ???
+  rank_loss_top_sample: 2
+  rank_loss_factor: 16
+
+snli_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/snli/snli_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: snli
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+sst2_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/sst2/sst2_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: sst2
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+sst5_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/sst5/sst5_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: sst5
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+subj_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/subj/subj_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: subj
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+trec_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/trec/trec_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: trec
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+wikiauto_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/wikiauto/wikiauto_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: wikiauto
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+wnli_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/wnli/wnli_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: wnli
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+yahoo_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/yahoo/yahoo_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: yahoo
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+yelp_full_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: /nvme/xnli/lk_code/exps/rtv_icl/scored_data/yelp_full/yelp_full_scored_qa.json
+  setup_type: qa
+  top_k: 5
+  hard_neg: true
+  task_name: yelp_full
+  loss_type: ???
+  rank_loss_top_sample: 1
+  rank_loss_factor: 1
+
+kp20k_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: ???
+  setup_type: ???
+  top_k: ???
+  hard_neg: ???
+  task_name: ???
+  loss_type: ???
+  rank_loss_top_sample: ???
+
+dwiki_dataset:
+  _target_: dpr.data.biencoder_data.EPRDataset
+  file: ???
+  setup_type: ???
+  top_k: ???
+  hard_neg: ???
+  task_name: ???
+  loss_type: ???
+  rank_loss_top_sample: ???
+
+
+break_train_q:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: data.retriever.break-train-q
+break_train_qd:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: data.retriever.break-train-qd
+break_train_d:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: data.retriever.break-train-d
+grailqa_dev:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: data.retriever.grailqa-dev
+  
+grailqa_train:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: data.retriever.grailqa-train
+
+nq_train:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: data.retriever.nq-train
+
+nq_train_hn1:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: data.retriever.nq-adv-hn-train
+
+nq_dev:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: data.retriever.nq-dev
+
+trivia_train:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: data.retriever.trivia-train
+
+trivia_dev:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: data.retriever.trivia-dev
+
+squad1_train:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: data.retriever.squad1-train
+
+squad1_dev:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: data.retriever.squad1-dev
+
+webq_train:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: data.retriever.webq-train
+  
+webq_dev:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: data.retriever.webq-dev
+  
+curatedtrec_train:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: data.retriever.curatedtrec-train
+  
+curatedtrec_dev:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: data.retriever.curatedtrec-dev
+    
