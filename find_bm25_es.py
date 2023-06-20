@@ -27,7 +27,7 @@ class BM25Finder:
         self.output_path = cfg.output_path
         self.task_name = cfg.task_name
         # assert cfg.dataset_split in ["train", "validation", "test", 'debug', "test_asset", "test_turk", "test_wiki"]
-        self.is_train = cfg.dataset_split == "train"
+        self.is_train = cfg.dataset_split in ["train", "debug"]
         self.L = cfg.L
         self.setup_type = cfg.setup_type
         assert self.setup_type in ["q", "qa", "a"]
