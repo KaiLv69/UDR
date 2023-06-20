@@ -256,38 +256,45 @@ def sample_smcalflow():
     data_dir = "/remote-home/klv/exps/rtv_icl/data"
     if not os.path.exists("/remote-home/klv/exps/rtv_icl/data"):
         data_dir = "/nvme/xnli/lk_code/exps/rtv_icl/data"
+    data_dir = "data"
     ds = load_dataset("iohadrubin/smcalflow", name="smcalflow")
-    # # 去重
-    # for split in ['train']:
-    #     x_set = set([])
-    #     y_set = set([])
-    #     lst = []
-    #     for i, e in tqdm(enumerate(ds[split])):
-    #         f = 0
-    #         if e['user_utterance'] not in x_set:
-    #             x_set.add(e['user_utterance'])
-    #             f += 1
-    #         if e['fully_typed_lispress'] not in y_set:
-    #             y_set.add(e['fully_typed_lispress'])
-    #             f += 1
-    #         if f == 2:
-    #             lst.append(i)
-    #     ds[split] = ds[split].select(lst)
-
+    # 去重
+    for split in ['train']:
+        x_set = set([])
+        y_set = set([])
+        lst = []
+        for i, e in tqdm(enumerate(ds[split])):
+            f = 0
+            if e['user_utterance'] not in x_set:
+                x_set.add(e['user_utterance'])
+                f += 1
+            if e['fully_typed_lispress'] not in y_set:
+                y_set.add(e['fully_typed_lispress'])
+                f += 1
+            if f == 2:
+                lst.append(i)
+        ds[split] = ds[split].select(lst)
+    #
     # for split in ['train', 'validation']:
     #     ds_id = datasets.Dataset.from_dict({"idx": list(range(len(ds[split])))})
     #     ds[split] = datasets.concatenate_datasets([ds_id, ds[split]], axis=1)
     # overfit for debug
-    slct = [i for i in range(len(ds['train']))]
-    random.seed(42)
-    smp = random.sample(slct, 100000)
-    ds['debug'] = ds['train'].select(smp)
+    # slct = [i for i in range(len(ds['train']))]
+    # random.seed(42)
+    # smp = random.sample(slct, 100000)
+    # ds['debug'] = ds['train'].select(smp)
     base_dir = data_dir + "/smcalflow"
     if not os.path.exists(base_dir):
         os.makedirs(base_dir)
     print(ds)
     ds.save_to_disk(base_dir)
 
+
+def sample_mtop_break():
+    dataset = load_dataset("break_data", "QDMR")
+    dataset.save_to_disk("data/break")
+    dataset = load_dataset("iohadrubin/mtop", name="mtop")
+    dataset.save_to_disk("data/mtop")
 
 def sample_xsum():
     # ds = load_dataset("xsum")

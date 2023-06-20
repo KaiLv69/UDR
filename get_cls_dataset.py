@@ -463,11 +463,12 @@ def get_mnli():
     slct = [i for i in range(len(ds['validation_mm']))]
     smp = random.sample(slct, 3000)
     ds['validation_mm'] = ds['validation_mm'].select(smp)
-
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data"):
-        base_dir = "/remote-home/klv/exps/rtv_icl/data/mnli"
-    else:
-        base_dir = "/nvme/xnli/lk_code/exps/rtv_icl/data/mnli"
+    #
+    # if os.path.exists("/remote-home/klv/exps/rtv_icl/data"):
+    #     base_dir = "/remote-home/klv/exps/rtv_icl/data/mnli"
+    # else:
+    #     base_dir = "/nvme/xnli/lk_code/exps/rtv_icl/data/mnli"
+    base_dir = "data/mnli"
     if not os.path.exists(base_dir):
         os.makedirs(base_dir)
     print(ds)
@@ -634,10 +635,11 @@ def get_snli():
     # smp = random.sample(slct, 3000)
     # ds['validation_mm'] = ds['validation_mm'].select(smp)
 
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data"):
-        base_dir = "/remote-home/klv/exps/rtv_icl/data/snli"
-    else:
-        base_dir = "/nvme/xnli/lk_code/exps/rtv_icl/data/snli"
+    # if os.path.exists("/remote-home/klv/exps/rtv_icl/data"):
+    #     base_dir = "/remote-home/klv/exps/rtv_icl/data/snli"
+    # else:
+    #     base_dir = "/nvme/xnli/lk_code/exps/rtv_icl/data/snli"
+    base_dir = "data/snli"
     if not os.path.exists(base_dir):
         os.makedirs(base_dir)
     print(ds)
