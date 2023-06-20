@@ -27,10 +27,9 @@ class YelpFullInferenceTask:
         with open(self.prompt_file) as f:
             self.prompts = json.load(f)
         self.prompts = get_test_labels(self.prompts, 'yelp_full', 1)
-        if os.path.exists("/remote-home/klv/exps/rtv_icl/data/yelp_full"):
-            dataset = load_from_disk("/remote-home/klv/exps/rtv_icl/data/yelp_full")
-        else:
-            dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/yelp_full")
+        current_path = os.getcwd()
+        base_path = current_path.split("UDR")[0] + "UDR"
+        dataset = load_from_disk(os.path.join(base_path, "data/yelp_full"))
 
         self.hf_dataset = load_train_dataset(dataset, size=ds_size, listify=False)
         self.hf_dataset = self.hf_dataset.map(set_length, with_indices=True, fn_kwargs={'tokenizer': tokenizer})

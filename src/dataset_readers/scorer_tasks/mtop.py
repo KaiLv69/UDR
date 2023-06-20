@@ -1,7 +1,7 @@
-from datasets import load_dataset
+from datasets import load_dataset, load_from_disk
 from src.utils.dataset_utils import load_train_dataset
 
-import re
+import re, os
 import json
 
 
@@ -10,7 +10,9 @@ class MtopScorerTask:
     prompt_field = "ctxs"
     question_field = "question"
     def __init__(self,example_file,ds_size=None) -> None:
-        dataset = load_dataset("iohadrubin/mtop",name="mtop")
+        current_path = os.getcwd()
+        base_path = current_path.split("UDR")[0] + "UDR"
+        dataset = load_from_disk(os.path.join(base_path, "data/mtop"))
         self.hf_dataset = load_train_dataset(dataset,size=ds_size)
         self.training_dataset = list(enumerate(self.hf_dataset))
         

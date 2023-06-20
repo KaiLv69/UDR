@@ -1,5 +1,5 @@
 from datasets import load_dataset, load_from_disk
-import re
+import re, os
 import json
 import random
 from src.utils.dataset_utils import load_train_dataset
@@ -11,7 +11,9 @@ class SmcalflowScorerTask:
     prompt_field = "ctxs"
     question_field = "user_utterance"
     def __init__(self,example_file,ds_size=None) -> None:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/smcalflow")
+        current_path = os.getcwd()
+        base_path = current_path.split("UDR")[0] + "UDR"
+        dataset = load_from_disk(os.path.join(base_path, "data/smcalflow"))
         # dataset = load_dataset("iohadrubin/smcalflow")
         self.hf_dataset = load_train_dataset(dataset,size=ds_size)
         # self.hf_dataset = ['train']

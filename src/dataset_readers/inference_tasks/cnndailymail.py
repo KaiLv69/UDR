@@ -24,10 +24,9 @@ class CNNDailyMailInferenceTask:
         self.prompt_file = prompt_file
         with open(self.prompt_file) as f:
             self.prompts = json.load(f)
-        if os.path.exists("/remote-home/klv/exps/rtv_icl/data"):
-            dataset = load_from_disk("/remote-home/klv/exps/rtv_icl/data/cnndailymail")
-        else:
-            dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/cnndailymail")
+        current_path = os.getcwd()
+        base_path = current_path.split("UDR")[0] + "UDR"
+        dataset = load_from_disk(os.path.join(base_path, "data/cnndailymail"))
         self.hf_dataset = load_train_dataset(dataset, size=ds_size, listify=False)
         self.hf_dataset = self.hf_dataset.map(set_length, with_indices=True, fn_kwargs={'tokenizer': tokenizer})
         self.training_dataset = list(self.hf_dataset)

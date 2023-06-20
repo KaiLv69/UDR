@@ -30,7 +30,9 @@ class WikiautoInferenceTask:
         # for split in ['train', 'validation', 'test_asset', 'test_turk', "test_wiki"]:
         #     ds_id = Dataset.from_dict({"idx": list(range(len(dataset[split])))})
         #     dataset[split] = concatenate_datasets([dataset[split], ds_id], axis=1)
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/wikiauto")
+        current_path = os.getcwd()
+        base_path = current_path.split("UDR")[0] + "UDR"
+        dataset = load_from_disk(os.path.join(base_path, "data/wikiauto"))
 
         self.hf_dataset = load_train_dataset(dataset, size=ds_size, listify=False)
         self.hf_dataset = self.hf_dataset.map(set_length, with_indices=True, fn_kwargs={'tokenizer': tokenizer})

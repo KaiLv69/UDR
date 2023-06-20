@@ -1,5 +1,5 @@
-import re
-from datasets import load_dataset
+import re, os
+from datasets import load_dataset, load_from_disk
 from src.utils.dataset_utils import load_train_dataset
 
 import json
@@ -23,7 +23,9 @@ class MtopInferenceTask:
         self.prompt_file = prompt_file
         with open(self.prompt_file) as f:
             self.prompts = json.load(f)
-        dataset = load_dataset("iohadrubin/mtop",name="mtop")
+        current_path = os.getcwd()
+        base_path = current_path.split("UDR")[0] + "UDR"
+        dataset = load_from_disk(os.path.join(base_path, "data/mtop"))
         self.hf_dataset = load_train_dataset(dataset,size=ds_size,listify=False)
         self.hf_dataset = self.hf_dataset.map(set_length,with_indices=True,fn_kwargs={'tokenizer':tokenizer})
         self.training_dataset = list(self.hf_dataset)

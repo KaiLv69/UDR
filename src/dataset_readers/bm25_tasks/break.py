@@ -1,6 +1,6 @@
 import re
-from datasets import load_dataset
-import json
+from datasets import load_dataset, load_from_disk
+import json, os
 from src.utils.app import App
 from src.utils.dataset_utils import load_train_dataset
 
@@ -39,7 +39,9 @@ class BreakBM25Task:
         self.setup_type = setup_type
         self.get_field = field_getter.functions[self.setup_type]
         self.dataset_split = dataset_split
-        dataset = load_dataset("break_data","QDMR")
+        current_path = os.getcwd()
+        base_path = current_path.split("UDR")[0] + "UDR"
+        dataset = load_from_disk(os.path.join(base_path, "data/break"))
         self.train_dataset = load_train_dataset(dataset,size=ds_size)
         if self.dataset_split=="train":
             self.dataset = self.train_dataset 

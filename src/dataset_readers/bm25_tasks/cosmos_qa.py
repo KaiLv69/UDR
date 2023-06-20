@@ -35,11 +35,9 @@ class CosmosQaBM25Task:
         self.setup_type = setup_type
         self.get_field = field_getter.functions[self.setup_type]
         self.dataset_split = dataset_split
-        if os.path.exists("/remote-home/klv/exps/rtv_icl/data/cosmos_qa"):
-            dataset = load_from_disk("/remote-home/klv/exps/rtv_icl/data/cosmos_qa")
-        else:
-            dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/cosmos_qa")
-        self.train_dataset = load_train_dataset(dataset, size=ds_size)
+        current_path = os.getcwd()
+        base_path = current_path.split("UDR")[0] + "UDR"
+        dataset = load_from_disk(os.path.join(base_path, "data/cosmos_qa"))
         print(dataset)
         self.train_dataset = load_train_dataset(dataset, size=ds_size)
         if self.dataset_split == "train":

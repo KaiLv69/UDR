@@ -1,6 +1,6 @@
 import re
 from datasets import load_dataset, Dataset, concatenate_datasets, load_from_disk
-import json
+import json, os
 from src.utils.app import App
 from nltk.tokenize import word_tokenize
 from src.utils.dataset_utils import load_train_dataset
@@ -39,7 +39,9 @@ class WikiautoBM25Task:
         #     dataset[split] = concatenate_datasets([dataset[split], ds_id], axis=1)
         # # overfit for debug
         # dataset['debug'] = dataset['train'].select(range(5000))
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/wikiauto")
+        current_path = os.getcwd()
+        base_path = current_path.split("UDR")[0] + "UDR"
+        dataset = load_from_disk(os.path.join(base_path, "data/wikiauto"))
         self.train_dataset = load_train_dataset(dataset, size=ds_size)
         if self.dataset_split == "train":
             self.dataset = self.train_dataset

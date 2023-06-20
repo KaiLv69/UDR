@@ -10,7 +10,9 @@ class CommonGenScorerTask:
     prompt_field = "ctxs"
 
     def __init__(self, example_file, ds_size=None) -> None:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/common_gen")
+        current_path = os.getcwd()
+        base_path = current_path.split("UDR")[0] + "UDR"
+        dataset = load_from_disk(os.path.join(base_path, "data/common_gen"))
 
         # if 'q' in example_file.split('/')[-1]:
         #     self.hf_dataset = dataset['train_dedup']

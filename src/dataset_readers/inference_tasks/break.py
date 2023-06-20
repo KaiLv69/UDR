@@ -1,5 +1,5 @@
-import re
-from datasets import load_dataset
+import re, os
+from datasets import load_dataset, load_from_disk
 from src.utils.dataset_utils import load_train_dataset
 
 import json
@@ -31,7 +31,9 @@ class BreakInferenceTask:
         #     self.lengths_by_nid = {i:v for i,(k,v) in enumerate(self.lengths_by_qid.items())}
         with open(self.prompt_file) as f:
             self.prompts = json.load(f)
-        dataset = load_dataset("break_data", "QDMR")
+        current_path = os.getcwd()
+        base_path = current_path.split("UDR")[0] + "UDR"
+        dataset = load_from_disk(os.path.join(base_path, "data/break"))
         self.hf_dataset = load_train_dataset(dataset,size=ds_size,listify=False)
         
         

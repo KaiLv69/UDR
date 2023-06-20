@@ -1,6 +1,6 @@
 import re
 from datasets import load_dataset, Dataset, concatenate_datasets, load_from_disk
-import json
+import json, os
 from src.utils.app import App
 from nltk.tokenize import word_tokenize
 from src.utils.dataset_utils import load_train_dataset
@@ -31,8 +31,9 @@ class CommonGenBM25Task:
         self.setup_type = setup_type
         self.get_field = field_getter.functions[self.setup_type]
         self.dataset_split = dataset_split
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/common_gen")
-        # if self.setup_type == "a":
+        current_path = os.getcwd()
+        base_path = current_path.split("UDR")[0] + "UDR"
+        dataset = load_from_disk(os.path.join(base_path, "data/common_gen"))
         self.train_dataset = load_train_dataset(dataset, size=ds_size)
         # elif self.setup_type == "q":
         #     self.train_dataset = dataset['train_dedup']
