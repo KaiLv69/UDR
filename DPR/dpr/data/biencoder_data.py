@@ -176,20 +176,6 @@ def get_smcalflow_question_decomp(entry):
 def get_smcalflow_decomp(entry):
     return entry['lispress']
 
-@app.add("kp20k_q")
-def get_kp20k_question(entry):
-    return entry['document']
-
-@app.add("kp20k_qa")
-def get_kp20k_question_decomp(entry):
-    return f"{entry['document']}\t{entry['abstractive_keyphrases']}"
-    # return f"{entry['document']}\t{entry['extractive_keyphrases']}"
-
-@app.add("kp20k_a")
-def get_kp20k_decomp(entry):
-    return entry['abstractive_keyphrases']
-    # return entry['extractive_keyphrases']
-
 @app.add("dwiki_q")
 def get_dwiki_question(entry):
     return entry['src']
@@ -933,65 +919,34 @@ def get_wikihow_decomp(entry):
 dataset_dict = App()
 @dataset_dict.add("break")
 def get_break():
-    return load_dataset("break_data","QDMR")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/break"))
+    return dataset
 
 
 
 @dataset_dict.add("smcalflow")
 def get_smcalflow():
-    dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/smcalflow")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/smcalflow"))
     # dataset = load_dataset("iohadrubin/smcalflow")
     return dataset
 
 @dataset_dict.add("mtop")
 def get_mtop():
-    return load_dataset("iohadrubin/mtop",name="mtop")
-
-
-@dataset_dict.add("kp20k")
-def get_kp20k():
-    dataset = load_dataset("midas/kp20k", "generation")
-    # 去掉extractive_keyphrases为空的数据 去掉包含<eos>的数据
-    dataset = dataset.filter(lambda x: len(x['extractive_keyphrases']) > 0 and len(x['document']) + 4 * len(
-        x['extractive_keyphrases']) < 1000)
-
-    def process_kp20k(example):
-        example['extractive_keyphrases'] = str(example['extractive_keyphrases']).replace("'", '"')
-        example['abstractive_keyphrases'] = str(example['abstractive_keyphrases']).replace("'", '"')
-        example['document'] = " ".join(example['document'])
-        return example
-    dataset = dataset.map(process_kp20k, num_proc=8)
-    # add idx column
-    dataset = dataset.remove_columns("id")
-    for split in ['train', 'validation', 'test']:
-        ds_id = datasets.Dataset.from_dict({"idx": list(range(len(dataset[split])))})
-        dataset[split] = datasets.concatenate_datasets([dataset[split], ds_id], axis=1)
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/mtop"))
     return dataset
 
-
-@dataset_dict.add("dwiki")
-def get_dwiki():
-    base_dir = "/remote-home/klv/exps/rtv_icl/Document-level-text-simplification/Dataset/"
-    dataset = load_dataset("json", data_files={
-        'train': base_dir + "train.json",
-        'valid': base_dir + "valid.json",
-        "test": base_dir + "test.json"
-    })
-
-    def process_dwiki(example):
-        example['src'] = example['src'].strip()
-        example['tgt'] = example['tgt'].strip()
-        example['src_len'] = len(example['src'].split(" "))
-        example['tgt_len'] = len(example['tgt'].split(" "))
-        return example
-
-    dataset = dataset.map(process_dwiki)
-    dataset = dataset.filter(lambda x: x['src_len'] + x['tgt_len'] < 1000)
-    return dataset
 
 @dataset_dict.add("wikiauto")
 def get_wikiauto():
-    dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/wikiauto")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/wikiauto"))
     # dataset = load_dataset('GEM/wiki_auto_asset_turk', 'train')
     # dataset = dataset.filter(lambda x: len(x['target']) < 1000)
     # # add idx column
@@ -1001,192 +956,98 @@ def get_wikiauto():
     return dataset
 
 
-@dataset_dict.add("iwslt")
-def get_iwslt():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/iwslt"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/iwslt")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/iwslt")
-    return dataset
-
-@dataset_dict.add("squadv2")
-def get_squadv2():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/squadv2"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/squadv2")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/squadv2")
-    return dataset
-
-@dataset_dict.add("opusparcus")
-def get_opusparcus():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/opusparcus"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/opusparcus")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/opusparcus")
-    return dataset
-
 @dataset_dict.add("common_gen")
 def get_common_gen():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/common_gen"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/common_gen")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/common_gen")
-    return dataset
-
-@dataset_dict.add("xsum")
-def get_xsum():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/xsum"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/xsum")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/xsum")
-    return dataset
-
-@dataset_dict.add("spider")
-def get_spider():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/spider"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/spider")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/spider")
-    return dataset
-
-@dataset_dict.add("iwslt_en_fr")
-def get_iwslt_en_fr():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/iwslt_en_fr"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/iwslt_en_fr")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/iwslt_en_fr")
-    return dataset
-
-@dataset_dict.add("iwslt_en_de")
-def get_iwslt_en_de():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/iwslt_en_de"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/iwslt_en_de")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/iwslt_en_de")
-    return dataset
-
-
-@dataset_dict.add("wmt_en_de")
-def get_wmt_en_de():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/wmt_en_de"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/wmt_en_de")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/wmt_en_de")
-    return dataset
-
-@dataset_dict.add("wmt_de_en")
-def get_wmt_de_en():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/wmt_de_en"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/wmt_de_en")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/wmt_de_en")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/common_gen"))
     return dataset
 
 @dataset_dict.add("roc_ending_generation")
 def get_roc_ending_generation():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/roc_ending_generation"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/roc_ending_generation")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/roc_ending_generation")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/roc_ending_generation"))
     return dataset
 
 @dataset_dict.add("roc_story_generation")
 def get_roc_story_generation():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/roc_story_generation"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/roc_story_generation")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/roc_story_generation")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/roc_story_generation"))
     return dataset
 
 @dataset_dict.add("e2e")
 def get_e2e():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/e2e"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/e2e")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/e2e")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/e2e"))
     return dataset
 
 
 @dataset_dict.add("dart")
 def get_dart():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/dart"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/dart")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/dart")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/dart"))
     return dataset
 
-
-@dataset_dict.add("totto")
-def get_totto():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/totto"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/totto")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/totto")
-    return dataset
 
 @dataset_dict.add("cnndailymail")
 def get_cnndailymail():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/cnndailymail"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/cnndailymail")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/cnndailymail")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/cnndailymail"))
     return dataset
 
 @dataset_dict.add("python")
 def get_python():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/python"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/python")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/python")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/python"))
     return dataset
 
 @dataset_dict.add("go")
 def get_go():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/go"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/go")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/go")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/go"))
     return dataset
 
 @dataset_dict.add("php")
 def get_php():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/php"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/php")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/php")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/php"))
     return dataset
 
 
 @dataset_dict.add("trec")
 def get_trec():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/trec"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/trec")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/trec")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/trec"))
     return dataset
 
 @dataset_dict.add("sst2")
 def get_sst2():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/sst2"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/sst2")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/sst2")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/sst2"))
     return dataset
 
 @dataset_dict.add("mnli")
 def get_mnli():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/mnli"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/mnli")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/mnli")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/mnli"))
     return dataset
 
 @dataset_dict.add("cola")
 def get_cola():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/cola"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/cola")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/cola")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/cola"))
     return dataset
 
 @dataset_dict.add("qnli")
@@ -1197,273 +1058,134 @@ def get_qnli():
         dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/qnli")
     return dataset
 
-@dataset_dict.add("mrpc")
-def get_mrpc():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/mrpc"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/mrpc")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/mrpc")
-    return dataset
-
-@dataset_dict.add("boolq")
-def get_boolq():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/boolq"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/boolq")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/boolq")
-    return dataset
-
-@dataset_dict.add("wnli")
-def get_wnli():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/wnli"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/wnli")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/wnli")
-    return dataset
-
 @dataset_dict.add("snli")
 def get_snli():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/snli"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/snli")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/snli")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/snli"))
     return dataset
 
 @dataset_dict.add("rte")
 def get_rte():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/rte"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/rte")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/rte")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/rte"))
     return dataset
 
 @dataset_dict.add("cr")
 def get_cr():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/cr"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/cr")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/cr")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/cr"))
     return dataset
 
 
 @dataset_dict.add("subj")
 def get_subj():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/subj"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/subj")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/subj")
-    return dataset
-
-@dataset_dict.add("commonsense_qa")
-def get_commonsense_qa():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/commonsense_qa"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/commonsense_qa")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/commonsense_qa")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/subj"))
     return dataset
 
 @dataset_dict.add("cs_explan")
 def get_cs_explan():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/cs_explan"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/cs_explan")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/cs_explan")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/cs_explan"))
     return dataset
 
 @dataset_dict.add("cs_valid")
 def get_cs_valid():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/cs_valid"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/cs_valid")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/cs_valid")
-    return dataset
-
-@dataset_dict.add("hellaswag")
-def get_hellaswag():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/hellaswag"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/hellaswag")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/hellaswag")
-    return dataset
-
-@dataset_dict.add("openbookqa")
-def get_openbookqa():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/openbookqa"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/openbookqa")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/openbookqa")
-    return dataset
-
-
-@dataset_dict.add("race")
-def get_race():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/race"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/race")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/race")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/cs_valid"))
     return dataset
 
 
 @dataset_dict.add("cosmos_qa")
 def get_cosmos_qa():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/cosmos_qa"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/cosmos_qa")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/cosmos_qa")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/cosmos_qa"))
     return dataset
 
 @dataset_dict.add("copa")
 def get_copa():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/copa"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/copa")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/copa")
-    return dataset
-
-@dataset_dict.add("balanced_copa")
-def get_balanced_copa():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/balanced_copa"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/balanced_copa")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/balanced_copa")
-    return dataset
-
-@dataset_dict.add("arc_easy")
-def get_arc_easy():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/arc_easy"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/arc_easy")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/arc_easy")
-    return dataset
-
-@dataset_dict.add("social_i_qa")
-def get_social_i_qa():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/social_i_qa"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/social_i_qa")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/social_i_qa")
-    return dataset
-
-@dataset_dict.add("piqa")
-def get_piqa():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/piqa"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/piqa")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/piqa")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/copa"))
     return dataset
 
 @dataset_dict.add("mr")
 def get_mr():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/mr"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/mr")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/mr")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/mr"))
     return dataset
 
 @dataset_dict.add("yelp_full")
 def get_yelp_full():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/yelp_full"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/yelp_full")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/yelp_full")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/yelp_full"))
     return dataset
 
 @dataset_dict.add("amazon")
 def get_amazon():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/amazon"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/amazon")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/amazon")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/amazon"))
     return dataset
 
 @dataset_dict.add("agnews")
 def get_agnews():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/agnews"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/agnews")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/agnews")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/agnews"))
     return dataset
 
 @dataset_dict.add("dbpedia")
 def get_dbpedia():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/dbpedia"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/dbpedia")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/dbpedia")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/dbpedia"))
     return dataset
 
 @dataset_dict.add("yahoo")
 def get_yahoo():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/yahoo"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/yahoo")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/yahoo")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/yahoo"))
     return dataset
 
 
 @dataset_dict.add("sst5")
 def get_sst5():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/sst5"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/sst5")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/sst5")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/sst5"))
     return dataset
 
 @dataset_dict.add("java")
 def get_java():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/java"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/java")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/java")
-    return dataset
-
-@dataset_dict.add("javascript")
-def get_javascript():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/javascript"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/javascript")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/javascript")
-    return dataset
-
-
-@dataset_dict.add("ruby")
-def get_ruby():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/ruby"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/ruby")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/ruby")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/java"))
     return dataset
 
 @dataset_dict.add("reddit")
 def get_reddit():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/reddit"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/reddit")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/reddit")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/reddit"))
     return dataset
 
-@dataset_dict.add("multinews")
-def get_multinews():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/multinews"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/multinews")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/multinews")
-    return dataset
 
 @dataset_dict.add("pubmed")
 def get_pubmed():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/pubmed"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/pubmed")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/pubmed")
-    return dataset
-
-@dataset_dict.add("wikihow")
-def get_wikihow():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/wikihow"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/wikihow")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/wikihow")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/pubmed"))
     return dataset
 
 class EPRDataset(Dataset):
