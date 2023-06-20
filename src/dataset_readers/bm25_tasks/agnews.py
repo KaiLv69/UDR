@@ -35,13 +35,11 @@ class AgnewsBM25Task:
         self.setup_type = setup_type
         self.get_field = field_getter.functions[self.setup_type]
         self.dataset_split = dataset_split
-        if os.path.exists("/remote-home/klv/exps/rtv_icl/data/agnews"):
-            dataset = load_from_disk("/remote-home/klv/exps/rtv_icl/data/agnews")
-        else:
-            dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/agnews")
+        current_path = os.getcwd()
+        base_path = current_path.split("UDR")[0] + "UDR"
+        dataset = load_from_disk(os.path.join(base_path, "data/agnews"))
         self.train_dataset = load_train_dataset(dataset, size=ds_size)
         print(dataset)
-        self.train_dataset = load_train_dataset(dataset, size=ds_size)
         if self.dataset_split == "train":
             self.dataset = self.train_dataset
         else:
