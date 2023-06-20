@@ -443,7 +443,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    fitlog.set_log_dir("upr_fitlog/metric_logs/")  # 设定日志存储的目录
+    fitlog.set_log_dir("udr_fitlog/metric_logs/")  # 设定日志存储的目录
     fitlog.add_hyper(args)  # 通过这种方式记录ArgumentParser的参数
 
     # tmp_fp = args.fp
