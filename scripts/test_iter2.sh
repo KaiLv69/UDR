@@ -8,18 +8,13 @@ gen_test_datasets=("cnndailymail" "dart" "e2e" "go" "java" "javascript" "mtop" "
 "roc_ending_generation" "roc_story_generation")
 gen_valid_datasets=("break" "common_gen" "smcalflow")
 
-cls_test_datasets=("copa")
-cls_valid_datasets=()
-gen_test_datasets=()
-gen_valid_datasets=()
 main_process_port=$((RANDOM % 5001 + 25000))
 ckpt="$PWD/exps/$exp_name/iter2/model_ckpt/dpr_biencoder.9"
 mkdir -p "$PWD/exps/$exp_name/data/iter2"
 
 generate_embedding_batch_size=2048
 
-#for ds in "${cls_valid_datasets[*]}" "${cls_test_datasets[*]}" "${gen_valid_datasets[*]}" "${gen_test_datasets[*]}" "wikiauto" "mnli"; do
-for ds in "${cls_valid_datasets[*]}" "${cls_test_datasets[*]}" "${gen_valid_datasets[*]}" "${gen_test_datasets[*]}"; do
+for ds in "${cls_valid_datasets[*]}" "${cls_test_datasets[*]}" "${gen_valid_datasets[*]}" "${gen_test_datasets[*]}" "wikiauto" "mnli"; do
 
   if [[ ${ds} == "${cls_valid_datasets[*]}" ]]; then
     echo "cls valid datasets"

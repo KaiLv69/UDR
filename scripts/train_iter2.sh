@@ -23,9 +23,7 @@ e2e_dataset,go_dataset,java_dataset,mnli_dataset,mr_dataset,mtop_dataset,\
 pubmed_dataset,python_dataset,reddit_dataset,roc_ending_generation_dataset,roc_story_generation_dataset,\
 rte_dataset,smcalflow_dataset,snli_dataset,sst2_dataset,sst5_dataset,subj_dataset,trec_dataset,\
 wikiauto_dataset,yahoo_dataset,yelp_full_dataset]"
-#train_datasets="[agnews_dataset,amazon_dataset]"
 train_sampling_rates="[1.32796954,1.326064751,1.09098953,0.728808723,2.486857169,1.274610601,10.27165339,1.676549424,5.457780654,2.297271022,2.297730798,1.323640297,2.297041238,2.049173252,0.726315577,0.726315577,0.726315577,2.467835848,1.837037767,0.726315577,0.968403553,0.726315577,1.19731204,0.774686486,0.776348677,4.606539463,0.726315577,2.762834762,2.486274289,2.568073857,3.131659862,0.726330103,1.345259534,1.326064751]"
-#train_sampling_rates="[1.32796954,1.326064751]"
 train_dense_encoder_py_output_path="$PWD/exps/$exp_name/iter2/model_ckpt"
 echo -e "\n\n-train dense encoder-\n\n"
 

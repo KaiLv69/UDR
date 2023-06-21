@@ -3,11 +3,8 @@ datasets_full=("agnews" "amazon" "break" "cola" "common_gen" \
 "e2e" "mr" "mtop" "pubmed" "reddit" "roc_ending_generation" "roc_story_generation" \
 "rte" "smcalflow" "sst2" "sst5" "subj" "trec" "yahoo" "yelp_full")
 datasets_sampled=("cnndailymail" "go" "java" "mnli" "php" "python" "snli" "wikiauto")
-datasets_full=("copa")
-datasets_sampled=()
 exp_name="bs128_grad-acc4_rk4_seed1208"
 model_ckpt_file="$PWD/exps/$exp_name/iter0/model_ckpt/dpr_biencoder.9"
-model_ckpt_file="/remote-home/klv/exps/UDR/exps/bs128_grad-acc4_rk4_seed1208/iter0/model_ckpt/dpr_biencoder.0"
 pretrained_model_cfg="bert-base-uncased"
 
 generate_embedding_batch_size=2048
