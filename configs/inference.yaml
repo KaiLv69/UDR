@@ -14,7 +14,7 @@ data_num: -1
 task_name: ???
 gen: True
 order: ascending
-template_idx: ???
+#template_idx: ???
 # model_name: 'google/t5-v1_1-small'
 dataset_reader:
   _target_: src.dataset_readers.few_shot_dsr.FewShotDatasetReader
@@ -27,7 +27,7 @@ dataset_reader:
   gen: ${gen}
   data_num: ${data_num}
   order: ${order}
-  template_idx: ${template_idx}
+#  template_idx: ${template_idx}
   
 model:
   _target_: src.models.model.get_model

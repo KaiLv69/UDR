@@ -27,15 +27,44 @@ def convert_kp20k():
         input_data = json.load(data_file)
     print("len of input file: ", len(input_data))
     print("len of input scored file", len(input_scored_data))
-    if args.dataset == "smcalflow":
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/smcalflow")
-        # dataset = load_dataset("iohadrubin/smcalflow")
-    else:
-        if os.path.exists("/remote-home/klv/exps/rtv_icl/data"):
-            path = "/remote-home/klv/exps/rtv_icl/data/" + args.dataset
-        else:
-            path = "/nvme/xnli/lk_code/exps/rtv_icl/data/" + args.dataset
-        dataset = load_from_disk(path)
+    dataset_path = {
+        "agnews": "KaiLv/UDR_AGNews",
+        "amazon": "KaiLv/UDR_Amazon",
+        "break": "KaiLv/UDR_BREAK",
+        "cnndailymail": "KaiLv/UDR_CNNDailyMail",
+        "cola": "KaiLv/UDR_COLA",
+        "common_gen": "KaiLv/UDR_CommonGen",
+        "copa": "KaiLv/UDR_COPA",
+        "cosmos_qa": "KaiLv/UDR_CosmosQA",
+        "cr": "KaiLv/UDR_CR",
+        "cs_explan": "KaiLv/UDR_ComE",
+        "cs_valid": "KaiLv/UDR_ComV",
+        "dart": "KaiLv/UDR_DART",
+        "dbpedia": "KaiLv/UDR_DBPedia",
+        "e2e": "KaiLv/UDR_E2E",
+        'go': "KaiLv/UDR_Go",
+        'java': "KaiLv/UDR_Java",
+        'mnli': "KaiLv/UDR_MNLI",
+        'mr': "KaiLv/UDR_MR",
+        'mtop': 'KaiLv/UDR_MTOP',
+        'php': "KaiLv/UDR_PHP",
+        'pubmed': "KaiLv/UDR_PubMed",
+        'python': "KaiLv/UDR_Python",
+        'reddit': "KaiLv/UDR_Reddit",
+        'roc_ending_generation': "KaiLv/UDR_RocEnding",
+        'roc_story_generation': "KaiLv/UDR_RocStory",
+        'rte': "KaiLv/UDR_RTE",
+        'smcalflow': "KaiLv/UDR_SMCalFlow",
+        'snli': "KaiLv/UDR_SNLI",
+        'sst2': "KaiLv/UDR_SST-2",
+        'sst5': "KaiLv/UDR_SST-5",
+        'subj': "KaiLv/UDR_Subj",
+        'trec': "KaiLv/UDR_TREC",
+        'wikiauto': "KaiLv/UDR_WikiAuto",
+        'yahoo': "KaiLv/UDR_Yahoo",
+        'yelp': "KaiLv/UDR_Yelp",
+    }
+    dataset = load_dataset(dataset_path[args.dataset])
 
     train_set = dataset[args.split]
 
@@ -128,7 +157,7 @@ def convert():
         idx = "question_id"
         question = "question_text"
     elif args.dataset == "smcalflow":
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/smcalflow")
+        dataset = load_dataset("KaiLv/UDR_SMCalFlow")
         # dataset = load_dataset("iohadrubin/smcalflow")
         idx = "idx"
         question = "user_utterance"

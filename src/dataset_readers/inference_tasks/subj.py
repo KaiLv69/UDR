@@ -30,9 +30,7 @@ class SubjInferenceTask:
         if template_idx != 2:
             self.prompts = change_prompt_template(self.prompts, 'subj', template_idx)
         self.prompts = get_test_labels(self.prompts, 'subj', template_idx)
-        current_path = os.getcwd()
-        base_path = current_path.split("UDR")[0] + "UDR"
-        dataset = load_from_disk(os.path.join(base_path, "data/subj"))
+        dataset = load_dataset("KaiLv/UDR_Subj")
 
         self.hf_dataset = load_train_dataset(dataset, size=ds_size, listify=False)
         self.hf_dataset = self.hf_dataset.map(set_length, with_indices=True, fn_kwargs={'tokenizer': tokenizer, "template_idx": template_idx})

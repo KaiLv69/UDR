@@ -1,3 +1,4 @@
+import os
 from src.utils.app import App
 import json
 import pandas as pd
@@ -51,8 +52,45 @@ def wikiauto_bleu(file_name):
     punctuation = '[%s‘]+' % re.escape(string.punctuation)
 
     if args.dataset == 'wikiauto' and args.split not in ['debug', 'test_wiki']:
-        from datasets import load_from_disk
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/" + args.dataset)
+        from datasets import load_dataset
+        dataset_path = {
+            "agnews": "KaiLv/UDR_AGNews",
+            "amazon": "KaiLv/UDR_Amazon",
+            "break": "KaiLv/UDR_BREAK",
+            "cnndailymail": "KaiLv/UDR_CNNDailyMail",
+            "cola": "KaiLv/UDR_COLA",
+            "common_gen": "KaiLv/UDR_CommonGen",
+            "copa": "KaiLv/UDR_COPA",
+            "cosmos_qa": "KaiLv/UDR_CosmosQA",
+            "cr": "KaiLv/UDR_CR",
+            "cs_explan": "KaiLv/UDR_ComE",
+            "cs_valid": "KaiLv/UDR_ComV",
+            "dart": "KaiLv/UDR_DART",
+            "dbpedia": "KaiLv/UDR_DBPedia",
+            "e2e": "KaiLv/UDR_E2E",
+            'go': "KaiLv/UDR_Go",
+            'java': "KaiLv/UDR_Java",
+            'mnli': "KaiLv/UDR_MNLI",
+            'mr': "KaiLv/UDR_MR",
+            'mtop': 'KaiLv/UDR_MTOP',
+            'php': "KaiLv/UDR_PHP",
+            'pubmed': "KaiLv/UDR_PubMed",
+            'python': "KaiLv/UDR_Python",
+            'reddit': "KaiLv/UDR_Reddit",
+            'roc_ending_generation': "KaiLv/UDR_RocEnding",
+            'roc_story_generation': "KaiLv/UDR_RocStory",
+            'rte': "KaiLv/UDR_RTE",
+            'smcalflow': "KaiLv/UDR_SMCalFlow",
+            'snli': "KaiLv/UDR_SNLI",
+            'sst2': "KaiLv/UDR_SST-2",
+            'sst5': "KaiLv/UDR_SST-5",
+            'subj': "KaiLv/UDR_Subj",
+            'trec': "KaiLv/UDR_TREC",
+            'wikiauto': "KaiLv/UDR_WikiAuto",
+            'yahoo': "KaiLv/UDR_Yahoo",
+            'yelp': "KaiLv/UDR_Yelp",
+        }
+        dataset = load_dataset(dataset_path[args.dataset])
         ref_dict = {}
         for e in dataset[args.split]:
             k= e['target']
@@ -60,8 +98,45 @@ def wikiauto_bleu(file_name):
             ref_dict[k] = e['references']
 
     if args.dataset in ['common_gen', 'opusparcus', 'squadv2', 'e2e', 'dart', 'totto']:
-        from datasets import load_from_disk
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/" + args.dataset)
+        from datasets import load_dataset
+        dataset_path = {
+            "agnews": "KaiLv/UDR_AGNews",
+            "amazon": "KaiLv/UDR_Amazon",
+            "break": "KaiLv/UDR_BREAK",
+            "cnndailymail": "KaiLv/UDR_CNNDailyMail",
+            "cola": "KaiLv/UDR_COLA",
+            "common_gen": "KaiLv/UDR_CommonGen",
+            "copa": "KaiLv/UDR_COPA",
+            "cosmos_qa": "KaiLv/UDR_CosmosQA",
+            "cr": "KaiLv/UDR_CR",
+            "cs_explan": "KaiLv/UDR_ComE",
+            "cs_valid": "KaiLv/UDR_ComV",
+            "dart": "KaiLv/UDR_DART",
+            "dbpedia": "KaiLv/UDR_DBPedia",
+            "e2e": "KaiLv/UDR_E2E",
+            'go': "KaiLv/UDR_Go",
+            'java': "KaiLv/UDR_Java",
+            'mnli': "KaiLv/UDR_MNLI",
+            'mr': "KaiLv/UDR_MR",
+            'mtop': 'KaiLv/UDR_MTOP',
+            'php': "KaiLv/UDR_PHP",
+            'pubmed': "KaiLv/UDR_PubMed",
+            'python': "KaiLv/UDR_Python",
+            'reddit': "KaiLv/UDR_Reddit",
+            'roc_ending_generation': "KaiLv/UDR_RocEnding",
+            'roc_story_generation': "KaiLv/UDR_RocStory",
+            'rte': "KaiLv/UDR_RTE",
+            'smcalflow': "KaiLv/UDR_SMCalFlow",
+            'snli': "KaiLv/UDR_SNLI",
+            'sst2': "KaiLv/UDR_SST-2",
+            'sst5': "KaiLv/UDR_SST-5",
+            'subj': "KaiLv/UDR_Subj",
+            'trec': "KaiLv/UDR_TREC",
+            'wikiauto': "KaiLv/UDR_WikiAuto",
+            'yahoo': "KaiLv/UDR_Yahoo",
+            'yelp': "KaiLv/UDR_Yelp",
+        }
+        dataset = load_dataset(dataset_path[args.dataset])
         ref_dict = {}
         for e in dataset[args.split]:
             k= e['target']
@@ -435,7 +510,7 @@ if __name__ == '__main__':
     parser.add_argument('--plm', type=str)
     parser.add_argument('--iter_scored_num', type=str)
     parser.add_argument('--iter_num', type=str)
-    parser.add_argument('--epoch_num', type=str)
+    parser.add_argument('--epoch_num', type=str, default="10")
     parser.add_argument('--prompt_num', type=str)
     parser.add_argument('--alpha', type=str)
     parser.add_argument('--beilv', type=str)

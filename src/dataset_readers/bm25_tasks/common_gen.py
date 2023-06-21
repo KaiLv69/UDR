@@ -31,9 +31,7 @@ class CommonGenBM25Task:
         self.setup_type = setup_type
         self.get_field = field_getter.functions[self.setup_type]
         self.dataset_split = dataset_split
-        current_path = os.getcwd()
-        base_path = current_path.split("UDR")[0] + "UDR"
-        dataset = load_from_disk(os.path.join(base_path, "data/common_gen"))
+        dataset = load_dataset("KaiLv/UDR_CommonGen")
         self.train_dataset = load_train_dataset(dataset, size=ds_size)
         # elif self.setup_type == "q":
         #     self.train_dataset = dataset['train_dedup']

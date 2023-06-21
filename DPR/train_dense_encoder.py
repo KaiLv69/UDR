@@ -231,7 +231,7 @@ class BiEncoderTrainer(object):
     def validate_and_save(self, epoch: int, iteration: int, scheduler):
         cfg = self.cfg
         # for distributed mode, save checkpoint for only one process
-        save_cp = cfg.local_rank in [-1, 0] and (epoch > (cfg.train.num_train_epochs-3) or (epoch+1) % 5 == 0 or True)
+        save_cp = cfg.local_rank in [-1, 0] and (epoch > (cfg.train.num_train_epochs-3) or (epoch+1) % 10 == 0 or True)
 
         if epoch == cfg.val_av_rank_start_epoch:
             self.best_validation_result = None
@@ -682,18 +682,18 @@ class BiEncoderTrainer(object):
                 )
                 rolling_train_loss = 0.0
 
-            if data_iteration % eval_step == 0:
-                logger.info(
-                    "rank=%d, Validation: Epoch: %d Step: %d/%d",
-                    cfg.local_rank,
-                    epoch,
-                    data_iteration,
-                    epoch_batches,
-                )
-                self.validate_and_save(
-                    epoch, train_data_iterator.get_iteration(), scheduler
-                )
-                self.biencoder.train()
+            # if data_iteration % eval_step == 0:
+            #     logger.info(
+            #         "rank=%d, Validation: Epoch: %d Step: %d/%d",
+            #         cfg.local_rank,
+            #         epoch,
+            #         data_iteration,
+            #         epoch_batches,
+            #     )
+            #     self.validate_and_save(
+            #         epoch, train_data_iterator.get_iteration(), scheduler
+            #     )
+            #     self.biencoder.train()
 
         logger.info("Epoch finished on %d", cfg.local_rank)
         self.validate_and_save(epoch, data_iteration, scheduler)
@@ -708,8 +708,8 @@ class BiEncoderTrainer(object):
         
         cfg = self.cfg
         model_to_save = get_model_obj(self.biencoder)
-        cp = os.path.join(cfg.output_dir, cfg.checkpoint_file_name + "." + str(epoch) + "_" + str(offset))
-        # cp = os.path.join(cfg.output_dir, cfg.checkpoint_file_name + "." + str(epoch))
+        # cp = os.path.join(cfg.output_dir, cfg.checkpoint_file_name + "." + str(epoch) + "_" + str(offset))
+        cp = os.path.join(cfg.output_dir, cfg.checkpoint_file_name + "." + str(epoch))
         meta_params = get_encoder_params_state_from_cfg(cfg)
         state = CheckpointState(
             model_to_save.get_state_dict(),

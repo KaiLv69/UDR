@@ -7,12 +7,11 @@ datasets_full=("copa")
 datasets_sampled=()
 exp_name="bs128_grad-acc4_rk4_seed1208"
 model_ckpt_file="$PWD/exps/$exp_name/iter0/model_ckpt/dpr_biencoder.9"
+model_ckpt_file="/remote-home/klv/exps/UDR/exps/bs128_grad-acc4_rk4_seed1208/iter0/model_ckpt/dpr_biencoder.0"
 pretrained_model_cfg="bert-base-uncased"
 
 generate_embedding_batch_size=2048
-cvd=4,5,6,7
-
-train_set="train"
+cvd=0,1,2,3,4,5,6,7
 
 for train_set in "train" "debug"; do
   if [ "$train_set" == "train" ]; then

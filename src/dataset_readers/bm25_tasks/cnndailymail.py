@@ -31,9 +31,7 @@ class CNNDailyMailBM25Task:
         self.setup_type = setup_type
         self.get_field = field_getter.functions[self.setup_type]
         self.dataset_split = dataset_split
-        current_path = os.getcwd()
-        base_path = current_path.split("UDR")[0] + "UDR"
-        dataset = load_from_disk(os.path.join(base_path, "data/cnndailymail"))
+        dataset = load_dataset("KaiLv/UDR_CNNDailyMail")
         self.train_dataset = load_train_dataset(dataset, size=ds_size)
         if self.dataset_split == "train":
             self.dataset = self.train_dataset

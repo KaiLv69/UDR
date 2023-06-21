@@ -919,34 +919,26 @@ def get_wikihow_decomp(entry):
 dataset_dict = App()
 @dataset_dict.add("break")
 def get_break():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/break"))
+    dataset = load_dataset("KaiLv/UDR_BREAK")
     return dataset
 
 
 
 @dataset_dict.add("smcalflow")
 def get_smcalflow():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/smcalflow"))
+    dataset = load_dataset("KaiLv/UDR_SMCalFlow")
     # dataset = load_dataset("iohadrubin/smcalflow")
     return dataset
 
 @dataset_dict.add("mtop")
 def get_mtop():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/mtop"))
+    dataset = load_dataset("KaiLv/UDR_MTOP")
     return dataset
 
 
 @dataset_dict.add("wikiauto")
 def get_wikiauto():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/wikiauto"))
+    dataset = load_dataset("KaiLv/UDR_WikiAuto")
     # dataset = load_dataset('GEM/wiki_auto_asset_turk', 'train')
     # dataset = dataset.filter(lambda x: len(x['target']) < 1000)
     # # add idx column
@@ -958,234 +950,171 @@ def get_wikiauto():
 
 @dataset_dict.add("common_gen")
 def get_common_gen():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/common_gen"))
+    dataset = load_dataset("KaiLv/UDR_CommonGen")
     return dataset
 
 @dataset_dict.add("roc_ending_generation")
 def get_roc_ending_generation():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/roc_ending_generation"))
+    dataset = load_dataset("KaiLv/UDR_RocEnding")
     return dataset
 
 @dataset_dict.add("roc_story_generation")
 def get_roc_story_generation():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/roc_story_generation"))
+    dataset = load_dataset("KaiLv/UDR_RocStory")
     return dataset
 
 @dataset_dict.add("e2e")
 def get_e2e():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/e2e"))
+    dataset = load_dataset("KaiLv/UDR_E2E")
     return dataset
 
 
 @dataset_dict.add("dart")
 def get_dart():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/dart"))
+    dataset = load_dataset("KaiLv/UDR_DART")
     return dataset
 
 
 @dataset_dict.add("cnndailymail")
 def get_cnndailymail():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/cnndailymail"))
+    dataset = load_dataset("KaiLv/UDR_CNNDailyMail")
     return dataset
 
 @dataset_dict.add("python")
 def get_python():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/python"))
+    dataset = load_dataset("KaiLv/UDR_Python")
     return dataset
 
 @dataset_dict.add("go")
 def get_go():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/go"))
+    dataset = load_dataset("KaiLv/UDR_Go")
     return dataset
 
 @dataset_dict.add("php")
 def get_php():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/php"))
+    dataset = load_dataset("KaiLv/UDR_PHP")
     return dataset
 
 
 @dataset_dict.add("trec")
 def get_trec():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/trec"))
+    dataset = load_dataset("KaiLv/UDR_TREC")
     return dataset
 
 @dataset_dict.add("sst2")
 def get_sst2():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/sst2"))
+    dataset = load_dataset("KaiLv/UDR_SST-2")
     return dataset
 
 @dataset_dict.add("mnli")
 def get_mnli():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/mnli"))
+    dataset = load_dataset("KaiLv/UDR_MNLI")
     return dataset
 
 @dataset_dict.add("cola")
 def get_cola():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/cola"))
+    dataset = load_dataset("KaiLv/UDR_COLA")
     return dataset
 
 @dataset_dict.add("qnli")
 def get_qnli():
-    if os.path.exists("/remote-home/klv/exps/rtv_icl/data/qnli"):
-        dataset = datasets.load_from_disk("/remote-home/klv/exps/rtv_icl/data/qnli")
-    else:
-        dataset = load_from_disk("/nvme/xnli/lk_code/exps/rtv_icl/data/qnli")
+    current_path = os.getcwd()
+    base_path = current_path.split("UDR")[0] + "UDR"
+    dataset = load_from_disk(os.path.join(base_path, "data/qnli"))
     return dataset
 
 @dataset_dict.add("snli")
 def get_snli():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/snli"))
+    dataset = load_dataset("KaiLv/UDR_SNLI")
     return dataset
 
 @dataset_dict.add("rte")
 def get_rte():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/rte"))
+    dataset = load_dataset("KaiLv/UDR_RTE")
     return dataset
 
 @dataset_dict.add("cr")
 def get_cr():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/cr"))
+    dataset = load_dataset("KaiLv/UDR_CR")
     return dataset
 
 
 @dataset_dict.add("subj")
 def get_subj():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/subj"))
+    dataset = load_dataset("KaiLv/UDR_Subj")
     return dataset
 
 @dataset_dict.add("cs_explan")
 def get_cs_explan():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/cs_explan"))
+    dataset = load_dataset("KaiLv/UDR_ComE")
     return dataset
 
 @dataset_dict.add("cs_valid")
 def get_cs_valid():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/cs_valid"))
+    dataset = load_dataset("KaiLv/UDR_ComV")
     return dataset
 
 
 @dataset_dict.add("cosmos_qa")
 def get_cosmos_qa():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/cosmos_qa"))
+    dataset = load_dataset("KaiLv/UDR_CosmosQA")
     return dataset
 
 @dataset_dict.add("copa")
 def get_copa():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/copa"))
+    dataset = load_dataset("KaiLv/UDR_COPA")
     return dataset
 
 @dataset_dict.add("mr")
 def get_mr():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/mr"))
+    dataset = load_dataset("KaiLv/UDR_MR")
     return dataset
 
 @dataset_dict.add("yelp_full")
 def get_yelp_full():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/yelp_full"))
+    dataset = load_dataset("KaiLv/UDR_Yelp")
     return dataset
 
 @dataset_dict.add("amazon")
 def get_amazon():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/amazon"))
+    dataset = load_dataset("KaiLv/UDR_Amazon")
     return dataset
 
 @dataset_dict.add("agnews")
 def get_agnews():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/agnews"))
+    dataset = load_dataset("KaiLv/UDR_AGNews")
     return dataset
 
 @dataset_dict.add("dbpedia")
 def get_dbpedia():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/dbpedia"))
+    dataset = load_dataset("KaiLv/UDR_DBPedia")
     return dataset
 
 @dataset_dict.add("yahoo")
 def get_yahoo():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/yahoo"))
+    dataset = load_dataset("KaiLv/UDR_Yahoo")
     return dataset
 
 
 @dataset_dict.add("sst5")
 def get_sst5():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/sst5"))
+    dataset = load_dataset("KaiLv/UDR_SST-5")
     return dataset
 
 @dataset_dict.add("java")
 def get_java():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/java"))
+    dataset = load_dataset("KaiLv/UDR_Java")
     return dataset
 
 @dataset_dict.add("reddit")
 def get_reddit():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/reddit"))
+    dataset = load_dataset("KaiLv/UDR_Reddit")
     return dataset
 
 
 @dataset_dict.add("pubmed")
 def get_pubmed():
-    current_path = os.getcwd()
-    base_path = current_path.split("UDR")[0] + "UDR"
-    dataset = load_from_disk(os.path.join(base_path, "data/pubmed"))
+    dataset = load_dataset("KaiLv/UDR_PubMed")
     return dataset
 
 class EPRDataset(Dataset):

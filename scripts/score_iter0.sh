@@ -9,6 +9,8 @@ datasets_full=("agnews" "amazon" "break" "cola" "common_gen" \
 "e2e" "mr" "mtop" "pubmed" "reddit" "roc_ending_generation" "roc_story_generation" \
 "rte" "smcalflow" "sst2" "sst5" "subj" "trec" "yahoo" "yelp_full")
 datasets_sampled=("cnndailymail" "go" "java" "mnli" "php" "python" "snli" "wikiauto")
+datasets_full=("copa")
+datasets_sampled=()
 
 for train_set in "train" "debug"; do
   if [ "$train_set" == "train" ]; then

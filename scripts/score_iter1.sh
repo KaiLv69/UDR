@@ -9,7 +9,8 @@ datasets_full=("agnews" "amazon" "break" "cola" "common_gen" \
 "e2e" "mr" "mtop" "pubmed" "reddit" "roc_ending_generation" "roc_story_generation" \
 "rte" "smcalflow" "sst2" "sst5" "subj" "trec" "yahoo" "yelp_full")
 datasets_sampled=("cnndailymail" "go" "java" "mnli" "php" "python" "snli" "wikiauto")
-
+datasets_full=("copa")
+datasets_sampled=()
 for train_set in "train" "debug"; do
   if [ "$train_set" == "train" ]; then
     datasets=("${datasets_full[@]}")
@@ -19,7 +20,7 @@ for train_set in "train" "debug"; do
 
   for dataset in "${datasets[@]}"; do
     echo -e "\n\n-------format conversion ${dataset}-------\n\n"
-    in_scored_file="$PWD/data_score/${dataset}_bm25.json"
+    in_scored_file="$PWD/exps/$exp_name/data/iter0/${dataset}_scoredqa_merged.json"
     input_dr_file="$PWD/exps/$exp_name/data/iter1/dr_data_${dataset}_${train_set}"
     out_dep_file="$PWD/exps/$exp_name/data/iter1/score_dep_file_${dataset}_${train_set}"
     output_file="$PWD/exps/$exp_name/data/iter1/dr_converted_${dataset}_${train_set}"

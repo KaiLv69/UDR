@@ -11,9 +11,7 @@ class CosmosQaScorerTask:
     prompt_field = "ctxs"
 
     def __init__(self, example_file, ds_size=None) -> None:
-        current_path = os.getcwd()
-        base_path = current_path.split("UDR")[0] + "UDR"
-        dataset = load_from_disk(os.path.join(base_path, "data/cosmos_qa"))
+        dataset = load_dataset("KaiLv/UDR_CosmosQA")
 
         self.hf_dataset = load_train_dataset(dataset, size=ds_size)
         self.training_dataset = list(enumerate(self.hf_dataset))

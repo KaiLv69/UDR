@@ -35,9 +35,7 @@ class AgnewsBM25Task:
         self.setup_type = setup_type
         self.get_field = field_getter.functions[self.setup_type]
         self.dataset_split = dataset_split
-        current_path = os.getcwd()
-        base_path = current_path.split("UDR")[0] + "UDR"
-        dataset = load_from_disk(os.path.join(base_path, "data/agnews"))
+        dataset = load_dataset("KaiLV/UDR_AGNews")
         self.train_dataset = load_train_dataset(dataset, size=ds_size)
         print(dataset)
         if self.dataset_split == "train":

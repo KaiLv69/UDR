@@ -27,9 +27,7 @@ class DartInferenceTask:
         self.prompt_file = prompt_file
         with open(self.prompt_file) as f:
             self.prompts = json.load(f)
-        current_path = os.getcwd()
-        base_path = current_path.split("UDR")[0] + "UDR"
-        dataset = load_from_disk(os.path.join(base_path, "data/dart"))
+        dataset = load_dataset("KaiLv/UDR_DART")
 
         self.hf_dataset = load_train_dataset(dataset, size=ds_size, listify=False)
         self.hf_dataset = self.hf_dataset.map(set_length, with_indices=True, fn_kwargs={'tokenizer': tokenizer})

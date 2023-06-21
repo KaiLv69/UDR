@@ -11,9 +11,7 @@ class SmcalflowScorerTask:
     prompt_field = "ctxs"
     question_field = "user_utterance"
     def __init__(self,example_file,ds_size=None) -> None:
-        current_path = os.getcwd()
-        base_path = current_path.split("UDR")[0] + "UDR"
-        dataset = load_from_disk(os.path.join(base_path, "data/smcalflow"))
+        dataset = load_dataset("KaiLv/UDR_SMCalFlow")
         # dataset = load_dataset("iohadrubin/smcalflow")
         self.hf_dataset = load_train_dataset(dataset,size=ds_size)
         # self.hf_dataset = ['train']
