@@ -14,10 +14,26 @@ We recommend installing `allennlp` and `apex` first, then you can install other 
 pip install -r requirements.txt
 ```
 
+### Setup `Elasticsearch`
+To speed up the retrieval process, we use `Elasticsearch` to initialize candidates of each training example.
+```bash
+#### Downloading ####
+ES=./elasticsearch-7.9.1/bin/elasticsearch
+if test -f "$ES"; then
+    echo "$ES exists. Using the existent one"
+else 
+    echo "$ES does not exist. Downloading a new one"
+    wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.9.1-linux-x86_64.tar.gz
+    tar -xf elasticsearch-7.9.1-linux-x86_64.tar.gz
+fi
+
+#### Starting the ES service ####
+nohup ./elasticsearch-7.9.1/bin/elasticsearch > elasticsearch.log &
+```
 ### Training
 The iterative training process of UDR can be done by the following commands:
-```shell
-# Initialize candidates of each training example by BM25
+```bash
+# Initialize candidates of each training example by BM25 in Elasticsearch
 bash scripts/find_bm25.sh
 # Score initial candidates by language model
 bash scripts/score_bm25.sh
